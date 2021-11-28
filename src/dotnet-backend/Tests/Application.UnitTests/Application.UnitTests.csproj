@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <RootNamespace>ProgrammingChallenge.Application.UnitTests</RootNamespace>
     <TargetFramework>net5.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
