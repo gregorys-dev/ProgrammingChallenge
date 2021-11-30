@@ -1,0 +1,73 @@
+<form [formGroup]="solutionForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="submission-form__card">
+    <mat-card-content>
+
+      <!-- Player and Language -->
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Name" formControlName="playerName">
+            <mat-error *ngIf="solutionForm.controls['playerName'].hasError('required')">
+              Last name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Language" formControlName="language">
+              <mat-option *ngFor="let language of languages" [value]="language.id">
+                {{ language.title }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="solutionForm.controls['language'].hasError('required')">
+              Language is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Task, Description, Solution -->
+      <ng-container *ngIf="tasks$ | async as taskList">
+        <ng-container *ngIf="selectedTask$ | async as selectedTask">
+        
+          <div class="row" >
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Select Task" formControlName="challengeTaskId">
+                <mat-option *ngFor="let task of taskList" [value]="task.id"> {{ task.name }} </mat-option>
+              </mat-select>
+              <mat-error *ngIf="solutionForm.controls['challengeTaskId'].hasError('required')">
+                Task is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row submission-form__description">
+            <span>{{selectedTask.description}}</span>
+          </div>
+
+          <div class="row submission-form__solution">
+            <mat-form-field class="full-width">
+              <textarea matInput 
+                        placeholder="Solution Code" 
+                        formControlName="solutionCode" 
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="25"
+              ></textarea>
+              <mat-error *ngIf="solutionForm.controls['solutionCode'].hasError('required')">
+                Solution Code <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+        </ng-container>
+      </ng-container>
+      
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

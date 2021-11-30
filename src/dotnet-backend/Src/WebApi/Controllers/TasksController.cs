@@ -10,12 +10,15 @@ using ProgrammingChallenge.Application.ChallengeTasks.Queries.GetChallengeTaskLi
 
 namespace ProgrammingChallenge.WebApi.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class TasksController : AppController
+    public class TasksController : ApiController
     {
         public TasksController(IMediator mediator) : base(mediator) {}
 
+        /// <summary>
+        /// Get list of tasks to solve
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IEnumerable<ChallengeTaskDto>> Get(CancellationToken cancellationToken)
             => await Mediator.Send(new GetChallengeTaskListQuery(), cancellationToken);
