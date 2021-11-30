@@ -8,7 +8,7 @@ namespace ProgrammingChallenge.Application.Common.Interfaces
     public interface IApplicationDbContext
     {
         DbSet<ChallengeTask> ChallengeTasks { get; }
-        DbSet<Participant> Participants { get; }
+        DbSet<Player> Players { get; }
         DbSet<Solution> Solutions { get; }
         DbSet<ExecutionInfo> ExecutionInfos { get; }
 

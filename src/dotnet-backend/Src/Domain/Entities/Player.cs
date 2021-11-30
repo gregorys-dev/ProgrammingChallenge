@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace ProgrammingChallenge.Domain.Entities
 {
-    public class Participant
+    public class Player
     {
         public int Id { get; set; }
         public string Name { get; set; }

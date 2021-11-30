@@ -1,0 +1,1 @@
+ng new programming-challenge --directory angular-frontend --routing --skip-git --style=scss --minimal

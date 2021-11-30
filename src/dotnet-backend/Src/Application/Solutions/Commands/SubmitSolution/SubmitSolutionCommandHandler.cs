@@ -25,7 +25,7 @@ namespace ProgrammingChallenge.Application.Solutions.Commands.SubmitSolution
         
         public async Task<int> Handle(SubmitSolutionCommand request, CancellationToken cancellationToken)
         {
-            var participant = await GetOrCreateParticipantAsync(request.ParticipantName, cancellationToken);
+            var player = await GetOrCreatePlayerAsync(request.PlayerName, cancellationToken);
 
             var language = Enum.Parse<Language>(request.Language, true);
             
@@ -35,9 +35,9 @@ namespace ProgrammingChallenge.Application.Solutions.Commands.SubmitSolution
                 Script = request.SolutionCode
             };
             
-            var solution = new Solution()
+            var solution = new Solution
             {
-                Participant = participant,
+                Player = player,
                 ChallengeTaskId = request.ChallengeTaskId,
                 ExecutionInfo = executionInfo,
             };
@@ -53,15 +53,15 @@ namespace ProgrammingChallenge.Application.Solutions.Commands.SubmitSolution
             return solution.Id;
         }
 
-        private async Task<Participant> GetOrCreateParticipantAsync(string name, CancellationToken cancellationToken)
+        private async Task<Player> GetOrCreatePlayerAsync(string name, CancellationToken cancellationToken)
         {
-            var existingParticipant = await _dbContext.Participants.FirstOrDefaultAsync(p => p.Name == name, cancellationToken);
-            if (existingParticipant is not null)
-                return existingParticipant;
+            var existingPlayer = await _dbContext.Players.FirstOrDefaultAsync(p => p.Name == name, cancellationToken);
+            if (existingPlayer is not null)
+                return existingPlayer;
 
-            var newParticipant = new Participant{Name = name};
-            _dbContext.Participants.Add(newParticipant);
-            return newParticipant;
+            var newPlayer = new Player{Name = name};
+            _dbContext.Players.Add(newPlayer);
+            return newPlayer;
         }
     }
 }

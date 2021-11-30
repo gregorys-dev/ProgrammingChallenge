@@ -67,7 +67,7 @@ namespace ProgrammingChallenge.WebApi
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer("localhost:4200");
                 }
             });
         }

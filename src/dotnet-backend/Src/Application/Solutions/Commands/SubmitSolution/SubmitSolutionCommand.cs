@@ -3,7 +3,7 @@ using MediatR;
 namespace ProgrammingChallenge.Application.Solutions.Commands.SubmitSolution
 {
     public record SubmitSolutionCommand(
-        string ParticipantName,
+        string PlayerName,
         int ChallengeTaskId,
         string SolutionCode,
         string Language

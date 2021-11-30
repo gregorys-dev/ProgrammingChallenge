@@ -4,8 +4,8 @@ namespace ProgrammingChallenge.Domain.Entities
     {
         public int Id { get; set; }
         
-        public int ParticipantId { get; set; }
-        public Participant Participant { get; set; }
+        public int PlayerId { get; set; }
+        public Player Player { get; set; }
         public int ChallengeTaskId { get; set; }
         public ChallengeTask ChallengeTask { get; set; }
         

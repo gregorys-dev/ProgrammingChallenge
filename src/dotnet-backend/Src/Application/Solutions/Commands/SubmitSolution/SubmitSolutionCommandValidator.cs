@@ -8,7 +8,7 @@ namespace ProgrammingChallenge.Application.Solutions.Commands.SubmitSolution
     {
         public SubmitSolutionCommandValidator()
         {
-            RuleFor(v => v.ParticipantName).NotEmpty();
+            RuleFor(v => v.PlayerName).NotEmpty();
             RuleFor(v => v.SolutionCode).NotEmpty();
             RuleFor(v => v.ChallengeTaskId).GreaterThan(0);
             RuleFor(v => v.Language).Must(BeConvertibleToLanguageEnum);

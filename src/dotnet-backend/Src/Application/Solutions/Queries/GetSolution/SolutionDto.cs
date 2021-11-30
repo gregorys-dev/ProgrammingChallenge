@@ -4,7 +4,7 @@ namespace ProgrammingChallenge.Application.Solutions.Queries.GetSolution
     {
         public int Id { get; set; }
         
-        public int ParticipantId { get; set; }
+        public int PlayerId { get; set; }
         public int ChallengeTaskId { get; set; }
         
         public int ExecutionInfoId { get; set; }
