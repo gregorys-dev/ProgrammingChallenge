@@ -73,6 +73,6 @@ export class SubmitSolutionComponent {
       return
     }
 
-    this.solutionsService.post(this.solutionForm.value);
+    this.solutionsService.post(this.solutionForm.value).subscribe(res => console.warn(res));
   }
 }

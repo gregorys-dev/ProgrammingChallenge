@@ -12,6 +12,6 @@ namespace ProgrammingChallenge.Application.Common.Interfaces
         DbSet<Solution> Solutions { get; }
         DbSet<ExecutionInfo> ExecutionInfos { get; }
 
-        Task SaveChangesAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

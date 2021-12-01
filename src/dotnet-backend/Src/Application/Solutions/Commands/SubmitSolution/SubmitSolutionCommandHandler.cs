@@ -28,11 +28,15 @@ namespace ProgrammingChallenge.Application.Solutions.Commands.SubmitSolution
             var player = await GetOrCreatePlayerAsync(request.PlayerName, cancellationToken);
 
             var language = Enum.Parse<Language>(request.Language, true);
+
+            var task = await _dbContext.ChallengeTasks
+                .FirstAsync(t => t.Id == request.ChallengeTaskId, cancellationToken);
             
             var executionInfo = new ExecutionInfo
             {
                 Language = language,
-                Script = request.SolutionCode
+                Script = request.SolutionCode,
+                Stdin = task.StdIn.Split(Environment.NewLine)
             };
             
             var solution = new Solution
@@ -48,6 +52,8 @@ namespace ProgrammingChallenge.Application.Solutions.Commands.SubmitSolution
             
             await _compilerService.ExecuteScriptAsync(executionInfo, cancellationToken);
 
+            solution.IsPassed = task.ExpectedStdOut.Trim() == executionInfo.Output.Trim();
+            
             await _dbContext.SaveChangesAsync(cancellationToken);
             
             return solution.Id;

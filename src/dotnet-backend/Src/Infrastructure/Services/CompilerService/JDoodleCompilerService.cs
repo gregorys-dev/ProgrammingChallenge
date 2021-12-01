@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -32,7 +33,7 @@ namespace ProgrammingChallenge.Infrastructure.Services.CompilerService
                 VersionIndex = version.ToString(),
                 Language = language,
                 Script = info.Script,
-                Stdin = string.Join(Environment.NewLine, info.Stdin),
+                Stdin = string.Join(string.Empty, info.Stdin.Select(s => s + Environment.NewLine)),
             };
             var jDoodleResponse = await PostRequest(jDoodleRequest);
             

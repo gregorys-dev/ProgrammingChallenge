@@ -8,4 +8,9 @@ namespace ProgrammingChallenge.Application.Common.Interfaces
     {
         Task ExecuteScriptAsync(ExecutionInfo info, CancellationToken cancellationToken);
     }
+
+    public interface IApplicationConfig
+    {
+        string DbConnection { get; }
+    } 
 }

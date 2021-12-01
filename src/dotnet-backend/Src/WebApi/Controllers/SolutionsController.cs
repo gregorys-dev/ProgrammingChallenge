@@ -11,9 +11,9 @@ namespace ProgrammingChallenge.WebApi.Controllers
     {
         public SolutionsController(IMediator mediator) : base(mediator) {}
 
-        [HttpGet]
-        public async Task<SolutionDto> Get(GetSolutionQuery query, CancellationToken cancellationToken)
-            => await Mediator.Send(query, cancellationToken);
+        [HttpGet("{id}")]
+        public async Task<SolutionDto> Get(int id, CancellationToken cancellationToken)
+            => await Mediator.Send(new GetSolutionQuery(id), cancellationToken);
         
         [HttpPost]
         public async Task<int> Post(SubmitSolutionCommand command, CancellationToken cancellationToken)

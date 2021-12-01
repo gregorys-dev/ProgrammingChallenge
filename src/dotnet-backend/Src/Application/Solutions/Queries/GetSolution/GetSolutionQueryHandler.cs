@@ -24,10 +24,21 @@ namespace ProgrammingChallenge.Application.Solutions.Queries.GetSolution
         }
         public async Task<SolutionDto> Handle(GetSolutionQuery request, CancellationToken cancellationToken)
         {
-            var solution = await _dbContext.Solutions.FirstOrDefaultAsync(s => s.Id == request.Id, cancellationToken) 
+            var solution = await _dbContext.Solutions
+                               .Include(s => s.ExecutionInfo)
+                               .FirstOrDefaultAsync(s => s.Id == request.Id, cancellationToken) 
                            ?? throw new NotFoundException<Solution>(request.Id);
 
             return _mapper.Map<SolutionDto>(solution);
+        }
+    }
+    
+    public class SolutionMappings : Profile
+    {
+        public SolutionMappings()
+        {
+            CreateMap<Solution, SolutionDto>();
+            CreateMap<ExecutionInfo, ExecutionInfoDto>();
         }
     }
 }
