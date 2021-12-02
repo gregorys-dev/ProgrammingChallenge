@@ -1,11 +1,12 @@
-import { TasksService } from './tasks.service';
-import { TopThreePlayersItem } from './top-three-players/top-three-players-datasource';
+import { ChallengeTask, TopThreePlayersItem } from './models/models';
+import { Observable, combineLatest } from 'rxjs';
+
+import { Dictionary } from 'lodash';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, merge, combineLatest } from 'rxjs';
-import { ChallengeTask, PlayerScore } from './models/models';
+import { PlayerScore } from './dtos/dtos';
+import { TasksService } from './tasks.service';
 import { map } from 'rxjs/operators';
-import { Dictionary } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -33,10 +34,10 @@ export class PlayersService {
 }
 
 function mapToRow(ps: PlayerScore, tasks: Dictionary<ChallengeTask>): TopThreePlayersItem {
-  return (<TopThreePlayersItem>{
+  return {
     playerName: ps.playerName,
     successSolutions: ps.successfulSubmissions,
     taskNames: ps.solvedTaskIds.map(taskId => tasks[taskId]?.name)
-  });
+  };
 }
 

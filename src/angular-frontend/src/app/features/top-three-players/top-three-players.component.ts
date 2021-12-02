@@ -1,19 +1,24 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { TopThreePlayersDataSource, TopThreePlayersItem } from './top-three-players-datasource';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { map, tap } from 'rxjs/operators';
 
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTable } from '@angular/material/table';
+import { BehaviorSubject } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
 import { PlayersService } from '../players.service';
 
 @Component({
   selector: 'app-top-three-players',
   templateUrl: './top-three-players.component.html',
-  styleUrls: ['./top-three-players.component.scss']
+  styleUrls: ['./top-three-players.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TopThreePlayersComponent implements AfterViewInit {
-  @ViewChild(MatTable) table!: MatTable<TopThreePlayersItem>;
-  dataSource: TopThreePlayersDataSource;
+export class TopThreePlayersComponent {
+  isLoaded$ = new BehaviorSubject(false)
+  
+  dataSource$ = this.playersService.getTop3()
+    .pipe(
+      tap(x => this.isLoaded$.next(true)),
+      map(data => new MatTableDataSource(data))
+    )
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   columnNames: Record<string, string> = {
@@ -23,13 +28,7 @@ export class TopThreePlayersComponent implements AfterViewInit {
   }
   displayedColumns = Object.keys(this.columnNames)
 
-  constructor(playersService: PlayersService) {
-    const data = playersService.getTop3()
-    
-    this.dataSource = new TopThreePlayersDataSource(data);
-  }
+  constructor(private playersService: PlayersService) {
 
-  ngAfterViewInit(): void {
-    this.table.dataSource = this.dataSource;
   }
 }

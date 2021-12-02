@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { SubmitSolutionCommand } from './dtos/commands';
+import { SubmitSolutionCommand } from './dtos/dtos';
 import { Injectable } from '@angular/core';
 import { Solution } from './models/models';
 

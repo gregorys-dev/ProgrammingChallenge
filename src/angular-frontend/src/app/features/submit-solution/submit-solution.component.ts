@@ -1,17 +1,19 @@
 import { FormBuilder, Validators } from '@angular/forms';
-import { Observable, combineLatest, of } from 'rxjs';
+import { Observable, combineLatest, of, Subject } from 'rxjs';
 
 import { ChallengeTask } from '../models/models';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SolutionsService } from '../solutions.service';
 import { TasksService } from '../tasks.service';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, switchMap } from 'rxjs/operators';
 import { keyBy, values } from 'lodash/fp';
+import { SubmitSolutionCommand } from '../dtos/dtos';
 
 @Component({
   selector: 'app-submit-solution',
   templateUrl: './submit-solution.component.html',
-  styleUrls: ['./submit-solution.component.scss']
+  styleUrls: ['./submit-solution.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SubmitSolutionComponent {
   solutionForm = this.fb.group({
@@ -61,6 +63,21 @@ export class SubmitSolutionComponent {
     )
   }
 
+  submitClicked$ = new Subject<SubmitSolutionCommand>()
+
+  submitResponse$ = this.submitClicked$.pipe(
+    switchMap(value => 
+      this.solutionsService.post(value)
+        .pipe(
+          map(res => ({
+            color: res.isPassed ? 'green' : 'red',
+            message: res.isPassed ? 'PASSED' : `FAILED. Output: ${res.executionInfo.output}`
+          })),
+          startWith({color: 'black', message: 'Executing...'})
+        ),
+    ),
+  )
+
   onSubmit(): void {
     console.log(this.solutionForm.value)
     
@@ -70,6 +87,6 @@ export class SubmitSolutionComponent {
       return
     }
 
-    this.solutionsService.post(this.solutionForm.value).subscribe(res => console.warn(res));
+    this.submitClicked$.next(this.solutionForm.value)
   }
 }
