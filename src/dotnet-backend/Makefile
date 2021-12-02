@@ -27,6 +27,6 @@ publish-staging:
 	dotnet publish $(startup-app-path) -c=Staging
 
 start-db:
-	sudo docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=<YourStrong@Passw0rd>" \
+	docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=<YourStrong@Passw0rd>" \
    -p 1433:1433 --name sql1 -h sql1 \
    -d mcr.microsoft.com/mssql/server:2019-latest

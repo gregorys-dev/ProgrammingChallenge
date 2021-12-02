@@ -36,7 +36,7 @@ namespace ProgrammingChallenge.Application.Solutions.Commands.SubmitSolution
             {
                 Language = language,
                 Script = request.SolutionCode,
-                Stdin = task.StdIn.Split(Environment.NewLine)
+                Stdin = task.StdIn.Split(Environment.NewLine),
             };
             
             var solution = new Solution

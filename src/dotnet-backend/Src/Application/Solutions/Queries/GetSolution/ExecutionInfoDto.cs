@@ -8,5 +8,6 @@ namespace ProgrammingChallenge.Application.Solutions.Queries.GetSolution
         public string Language { get; set; }
         public string UsedMemory { get; set; }
         public string CpuTime { get; set; }
+        public string Output { get; set; }
     }
 }

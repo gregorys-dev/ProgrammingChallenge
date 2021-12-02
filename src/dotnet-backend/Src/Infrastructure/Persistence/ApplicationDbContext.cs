@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using ProgrammingChallenge.Application.Common.Interfaces;
 using ProgrammingChallenge.Domain.Entities;
@@ -23,5 +24,9 @@ namespace ProgrammingChallenge.Infrastructure.Persistence
 
             base.OnModelCreating(builder);
         }
+        
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+            => optionsBuilder.LogTo(Console.WriteLine);
+
     }
 }

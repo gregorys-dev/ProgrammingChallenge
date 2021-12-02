@@ -12,7 +12,7 @@ namespace ProgrammingChallenge.WebApi.Controllers
     {
         public PlayersController(IMediator mediator) : base(mediator) {}
 
-        [HttpGet]
+        [HttpGet("get-top-3")]
         public async Task<IEnumerable<PlayerScoreDto>> GetTop3BySuccessfulSubmissions(CancellationToken cancellationToken)
             => await Mediator.Send(new GetTop3PlayersQuery(), cancellationToken);
     }

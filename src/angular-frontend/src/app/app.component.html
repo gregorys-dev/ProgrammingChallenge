@@ -1,7 +1,11 @@
-<header>
-    <span>Cognizant Challenge</span>
-    <a routerLink="features/solve">Solve</a>
-    <a routerLink="features/top3">Top 3</a>
+<header class="header">
+    <div class="header-left">
+        <span class="header__logo">Cognizant Challenge</span>
+    </div>
+    <div class="header-right">
+        <a routerLink="features/solve" routerLinkActive="header__link--active" mat-button>Solve</a>
+        <a routerLink="features/top3" routerLinkActive="header__link--active" mat-button>Top 3</a>
+    </div>
 </header>
 <main>
     <router-outlet></router-outlet>

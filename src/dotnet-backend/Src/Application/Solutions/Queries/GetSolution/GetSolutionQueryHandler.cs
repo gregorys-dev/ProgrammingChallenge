@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
@@ -30,15 +32,6 @@ namespace ProgrammingChallenge.Application.Solutions.Queries.GetSolution
                            ?? throw new NotFoundException<Solution>(request.Id);
 
             return _mapper.Map<SolutionDto>(solution);
-        }
-    }
-    
-    public class SolutionMappings : Profile
-    {
-        public SolutionMappings()
-        {
-            CreateMap<Solution, SolutionDto>();
-            CreateMap<ExecutionInfo, ExecutionInfoDto>();
         }
     }
 }

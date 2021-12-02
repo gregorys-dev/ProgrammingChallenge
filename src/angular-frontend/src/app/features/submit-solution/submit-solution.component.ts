@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 import { SolutionsService } from '../solutions.service';
 import { TasksService } from '../tasks.service';
 import { map, startWith } from 'rxjs/operators';
-import { keyBy } from 'lodash/fp';
+import { keyBy, values } from 'lodash/fp';
 
 @Component({
   selector: 'app-submit-solution',
@@ -33,9 +33,8 @@ export class SubmitSolutionComponent {
     {title: 'Python 3', id: 'python3'},
     {title: 'C# (Mono)', id: 'csharp'}
   ]
-  public tasks$: Observable<ChallengeTask[]>
-  public taskStore$: Observable<Record<number, ChallengeTask>>
   public selectedTask$: Observable<ChallengeTask>
+  tasks$: Observable<any[] | ChallengeTask[]>;
 
   constructor(
     private fb: FormBuilder,
@@ -46,16 +45,14 @@ export class SubmitSolutionComponent {
     
     const loadingTaskPlaceholder = <ChallengeTask>{name: 'Loading...'}
 
-    this.tasks$ = tasksService.getAll().pipe(
+    this.tasks$ = tasksService.tasksById$.pipe(
+      map(values),
       startWith([loadingTaskPlaceholder])
     )
 
-    this.taskStore$ = this.tasks$.pipe(
-      map(keyBy((t: ChallengeTask) => t.id))
-    )
 
     this.selectedTask$ = combineLatest([
-      this.taskStore$,
+      this.tasksService.tasksById$,
       this.challengeTaskId$
     ])
     .pipe(

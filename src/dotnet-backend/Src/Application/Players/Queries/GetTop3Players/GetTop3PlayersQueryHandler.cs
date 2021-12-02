@@ -27,7 +27,7 @@ namespace ProgrammingChallenge.Application.Players.Queries.GetTop3Players
                 {
                     PlayerName = grouping.First().Player.Name,
                     SuccessfulSubmissions = grouping.Count(),
-                    SolvedTaskIds = grouping.Select(s => s.ChallengeTask.Id)
+                    SolvedTaskIds = grouping.Select(s => s.ChallengeTask.Id).Distinct()
                 })
                 .OrderByDescending(dto => dto.SuccessfulSubmissions)
                 .Take(3)
