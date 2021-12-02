@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  application:
+    build: .
+    ports:
+      - 8086:80
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "<YourStrong@Passw0rd>"
+      ACCEPT_EULA: "Y"
+    ports:
+      - 1444:1433

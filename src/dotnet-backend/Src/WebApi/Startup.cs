@@ -30,7 +30,7 @@ namespace ProgrammingChallenge.WebApi
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/dist";
+                configuration.RootPath = "dist";
             });
             
             services.AddEndpointsApiExplorer();
@@ -66,7 +66,7 @@ namespace ProgrammingChallenge.WebApi
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {
