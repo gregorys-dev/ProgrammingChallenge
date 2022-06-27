@@ -10,6 +10,7 @@
 1. install Docker
 2. open terminal in the root directory of the repo and run
 ```
+docker-compose build
 docker-compose up
 ```
 3. open [localhost:8086](http://localhost:8086)
